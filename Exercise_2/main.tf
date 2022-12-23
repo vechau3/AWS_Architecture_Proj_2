@@ -16,8 +16,7 @@ resource "aws_instance" "UdacityT2" {
 resource "aws_iam_role" "function_role" {
   name = "function_role"
 
-  assume_role_policy = <<EOF
-{
+  assume_role_policy = jsonencode({
   "Version": "2012-10-17",
   "Statement": [
     {
@@ -28,8 +27,7 @@ resource "aws_iam_role" "function_role" {
       "Effect": "Allow"
     }
   ]
-}
-EOF
+ })
 }
 
 # Lambda function
@@ -62,8 +60,7 @@ resource "aws_iam_policy" "logging_policy" {
   path        = "/"
   description = "Pplicy logging"
 
-  policy = <<EOF
-{
+  policy = jsonencode({
   "Version": "2012-10-17",
   "Statement": [
     {
@@ -75,9 +72,8 @@ resource "aws_iam_policy" "logging_policy" {
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
     }
-  ]
-}
-EOF
+   ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "logging_iam_policy_attachment" {
